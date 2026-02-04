@@ -1,80 +1,95 @@
-♻️ GarbageDetection
-Hệ thống phân loại rác thải thông minh bằng AI & Computer Vision
-<p align="center"> <img src="https://img.icons8.com/color/96/recycle.png" width="90"/> </p> <p align="center"> <b>Góp phần bảo vệ môi trường bằng công nghệ trí tuệ nhân tạo</b> </p>
-📌 Giới thiệu
+<h1 align="center">♻️ GarbageDetection</h1>
 
-GarbageDetection là ứng dụng web giúp người dùng chụp ảnh hoặc tải ảnh rác thải để hệ thống AI tự động nhận diện và phân loại rác.
-Dự án ứng dụng Computer Vision kết hợp Deep Learning nhằm hỗ trợ nâng cao ý thức bảo vệ môi trường và hướng tới phân loại rác thông minh.
+<p align="center">
+  Hệ thống phát hiện & phân loại rác thải bằng AI, xây dựng với Python và Flask
+</p>
 
-🎯 Mục tiêu dự án
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.9+-blue">
+  <img src="https://img.shields.io/badge/Flask-Web%20Framework-green">
+  <img src="https://img.shields.io/badge/AI-Computer%20Vision-orange">
+</p>
 
-Ứng dụng AI vào bài toán thực tế
-Hỗ trợ người dùng phân loại rác nhanh chóng
-Xây dựng hệ thống web thân thiện, dễ sử dụng
-Làm nền tảng mở rộng cho các hệ thống môi trường thông minh
+---
 
-🚀 Tính năng chính
+## 📌 Giới thiệu
 
-    📷 Chụp ảnh rác trực tiếp bằng camera
+**GarbageDetection** là một ứng dụng web sử dụng **Trí tuệ nhân tạo (AI)** để nhận diện và phân loại rác thải từ hình ảnh.
+Dự án hướng tới việc nâng cao ý thức bảo vệ môi trường và hỗ trợ phân loại rác thông minh.
 
-    📤 Tải ảnh rác từ thiết bị
+---
 
-    🤖 AI tự động phân loại rác
+## 🧠 Chức năng chính
 
-    📜 Xem lịch sử phân loại
+- 📷 Upload hình ảnh rác thải
+- 🤖 Dự đoán loại rác bằng mô hình AI
+- 📊 Hiển thị kết quả phân loại
+- 🗂️ Quản lý thông tin rác (JSON)
+- 🌐 Giao diện web thân thiện
 
-    🏆 Bảng xếp hạng người dùng
+---
 
-    🔐 Đăng nhập / Đăng ký tài khoản
+## ⚙️ Công nghệ sử dụng
 
-🧠 Công nghệ sử dụng
-Thành phần	Công nghệ
-Backend	Python, Flask
-AI	TensorFlow / Keras
-Frontend	HTML, CSS, Bootstrap
-CSDL	SQLite
-Deploy	Docker, Procfile
-Khác	Git, GitHub
-🗂️ Cấu trúc thư mục
+- **Python 3.9+**
+- **Flask**
+- **TensorFlow / Keras**
+- **HTML / CSS**
+- **JSON**
+- **Docker** (tuỳ chọn)
+
+---
+
+## 📂 Cấu trúc thư mục
+
+```text
 GarbageDetection/
 │
-├── app.py                # File Flask chính
-├── templates/            # Giao diện HTML
-├── static/               # CSS, hình ảnh
-├── requirements.txt      # Thư viện Python
-├── Dockerfile            # Cấu hình Docker
-├── Procfile              # Cấu hình deploy
-├── runtime.txt           # Phiên bản Python
-├── waste_info.json       # Dữ liệu mô tả rác
-├── README.md             # Tài liệu dự án
-└── .gitignore
-
-⚙️ Cài đặt & chạy project
+├── static/                 # CSS, hình ảnh
+├── templates/              # HTML templates
+│   ├── base.html
+│   ├── home.html
+│   ├── upload.html
+│   └── result.html
+│
+├── app.py                  # Flask backend
+├── waste_info.json         # Dữ liệu thông tin rác
+├── requirements.txt        # Thư viện Python
+├── runtime.txt             # Phiên bản Python
+├── Dockerfile              # Docker config
+├── Procfile                # Deploy (Heroku)
+├── .gitignore
+├── .dockerignore
+└── README.md
+🚀 Hướng dẫn chạy dự án
 1️⃣ Clone repository
 git clone https://github.com/HnganNguyen/GarbageDetection.git
 cd GarbageDetection
-2️⃣ Cài thư viện
-pip install -r requirements.txt
-3️⃣ Chạy ứng dụng
-python app.py
-🌐 Truy cập: http://127.0.0.1:5000
+2️⃣ Tạo môi trường ảo & cài thư viện
+python -m venv venv
+source venv/bin/activate      # Linux / Mac
+venv\Scripts\activate         # Windows
 
-📸 Giao diện hệ thống
-Trang chủ phân loại rác
-Chụp ảnh bằng camera
-Upload ảnh
-Lịch sử & bảng xếp hạng
-(Giao diện thiết kế theo tông xanh – thân thiện môi trường 🌱)
+pip install -r requirements.txt
+3️⃣ Chạy ứng dụng Flask
+python app.py
+👉 Mở trình duyệt và truy cập:
+http://127.0.0.1:5000
+
+🌐 Demo giao diện
+(Bạn có thể chèn ảnh demo vào đây)
+
+![Demo](static/demo.png)
+🔮 Hướng phát triển
+🔍 Cải thiện độ chính xác mô hình
+
+🗑️ Phân loại nhiều loại rác hơn
+
+📱 Tối ưu giao diện mobile
+
+☁️ Deploy lên cloud (Render / Railway)
 
 👩‍💻 Tác giả
+Nguyễn Thị Hồng Ngân
 
-Nguyễn Thị Hồng Ngân - 223845
-🎓 Sinh viên Công nghệ Thông tin - Lớp DH22KPM01
-📚 Đồ án / Dự án học tập
-💚 Quan tâm đến AI & môi trường
-
-🌱 Định hướng phát triển
-Nâng cao độ chính xác mô hình AI
-Phân loại nhiều loại rác hơn
-Gợi ý cách xử lý rác sau phân loại
-Triển khai trên nền tảng di động
+GitHub: HnganNguyen
