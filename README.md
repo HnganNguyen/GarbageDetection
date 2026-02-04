@@ -1,9 +1,12 @@
 ♻️ GarbageDetection
+
 Hệ thống phân loại rác thải thông minh bằng AI & Computer Vision
-<p align="center"> <img src="https://img.icons8.com/color/96/recycle.png" width="90"/> </p> <p align="center"> <b>Góp phần bảo vệ môi trường bằng công nghệ trí tuệ nhân tạo</b> </p>
+
+
 📌 Giới thiệu
 
 GarbageDetection là ứng dụng web giúp người dùng chụp ảnh hoặc tải ảnh rác thải để hệ thống AI tự động nhận diện và phân loại rác.
+
 Dự án ứng dụng Computer Vision kết hợp Deep Learning nhằm hỗ trợ nâng cao ý thức bảo vệ môi trường và hướng tới phân loại rác thông minh.
 
 🎯 Mục tiêu dự án
