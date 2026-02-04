@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.9+-blue">
+  <img src="https://img.shields.io/badge/Python-3.8+-blue">
   <img src="https://img.shields.io/badge/Flask-Web%20Framework-green">
   <img src="https://img.shields.io/badge/AI-Computer%20Vision-orange">
 </p>
@@ -31,7 +31,7 @@ Dự án hướng tới việc nâng cao ý thức bảo vệ môi trường và
 
 ## ⚙️ Công nghệ sử dụng
 
-- **Python 3.9+**
+- **Python 3.8.9+**
 - **Flask**
 - **TensorFlow / Keras**
 - **HTML / CSS**
