@@ -1,7 +1,7 @@
 <h1 align="center">♻️ GarbageDetection</h1>
 
 <p align="center">
-  Hệ thống phát hiện & phân loại rác thải bằng AI, xây dựng với Python và Flask
+  Hệ thống phân loại rác thải bằng AI
 </p>
 
 <p align="center">
@@ -61,33 +61,40 @@ GarbageDetection/
 ├── .gitignore
 ├── .dockerignore
 └── README.md
-🚀 Hướng dẫn chạy dự án
+```
+
+## 🚀 Hướng dẫn chạy dự án
 1️⃣ Clone repository
+```bash
 git clone https://github.com/HnganNguyen/GarbageDetection.git
 cd GarbageDetection
+```
 2️⃣ Tạo môi trường ảo & cài thư viện
+```bash
 python -m venv venv
 source venv/bin/activate      # Linux / Mac
 venv\Scripts\activate         # Windows
-
 pip install -r requirements.txt
+`````
 3️⃣ Chạy ứng dụng Flask
+```bash
 python app.py
+````
 👉 Mở trình duyệt và truy cập:
+```bash
 http://127.0.0.1:5000
-
-🌐 Demo giao diện
+````
+## 🌐 Demo giao diện
 
 ![Trang Phân Loại chính](static/anhdemo2.png)
 
-🔮 Hướng phát triển
-🔍 Cải thiện độ chính xác mô hình
+## 🔮 Hướng phát triển
 
-🗑️ Phân loại nhiều loại rác hơn
-
-📱 Tối ưu giao diện mobile
-
-☁️ Deploy lên cloud (Render / Railway)
+- 🏫 Triển khai cho trường học nhằm nâng cao ý thức phân loại rác
+- 🏢 Áp dụng trong khu chung cư, khu đô thị thông minh
+- 🏭 Kết nối với hệ thống phân loại rác tự động
+- 📷 Tích hợp camera thời gian thực (real-time detection)
+- 🤖 Kết hợp IoT (ESP32, Raspberry Pi) để phân loại tại nguồn
 
 👩‍💻 Tác giả
 Nguyễn Thị Hồng Ngân
