@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}Phân Loại Rác{% endblock %}
+
+{% block content %}
+<!-- ================== KHUNG CHÍNH ================== -->
+<div class="container mt-5">
+
+    <!-- ===== TIÊU ĐỀ TRANG ===== -->
+    <h1 class="text-center text-success fw-bold mb-4">
+        ♻️ PHÂN LOẠI RÁC THẢI
+    </h1>
+
+    <!-- ===== MÔ TẢ / HƯỚNG DẪN ===== -->
+    <p class="text-center text-muted">
+        Người dùng có thể chụp ảnh rác trực tiếp bằng camera
+        hoặc tải ảnh từ thiết bị để hệ thống tiến hành phân loại.
+    </p>
+
+    <!-- ================== PHẦN CHỤP ẢNH TRỰC TIẾP ================== -->
+    <div class="text-center mb-5">
+
+        <!-- Tiêu đề khu vực camera -->
+        <h4 class="mb-3">📷 Chụp ảnh trực tiếp</h4>
+
+        <!-- Camera hiển thị video từ webcam -->
+        <div class="d-flex justify-content-center">
+            <video
+                id="camera"
+                autoplay
+                playsinline
+                style="
+                    width: 100%;
+                    max-width: 420px;
+                    border-radius: 16px;
+                    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+                ">
+            </video>
+        </div>
+
+        <!-- Nút chụp ảnh -->
+        <button
+            id="capture"
+            type="button"
+            class="btn btn-danger mt-4 px-4 fw-bold">
+            📸 Chụp ảnh
+        </button>
+
+        <!-- Canvas dùng để vẽ ảnh chụp (ẩn) -->
+        <canvas id="canvas" style="display: none;"></canvas>
+    </div>
+
+    <hr class="my-4">
+
+    <!-- ================== PHẦN TẢI ẢNH LÊN ================== -->
+    <div class="mt-4">
+
+        <!-- Tiêu đề khu vực upload -->
+        <h4 class="text-center mb-3">📂 Hoặc tải ảnh từ thiết bị</h4>
+
+        <!-- ===== FORM GỬI DỮ LIỆU LÊN SERVER ===== -->
+        <form
+            method="POST"
+            action="/"
+            enctype="multipart/form-data"
+            class="mt-3">
+
+            <!-- Input ẩn: lưu ảnh chụp từ camera (Base64) -->
+            <input
+                type="hidden"
+                name="captured_image"
+                id="captured_image">
+
+            <!-- Input chọn file ảnh -->
+            <div class="mb-3">
+                <label for="fileInput" class="form-label">
+                    Chọn file ảnh:
+                </label>
+                <input
+                    type="file"
+                    name="file"
+                    id="fileInput"
+                    class="form-control">
+            </div>
+
+            <!-- Nút gửi ảnh để phân loại -->
+            <button
+                type="submit"
+                class="btn btn-success w-100 fw-bold py-2">
+                🚀 Phân loại
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- ================== SCRIPT XỬ LÝ CAMERA ================== -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Lấy các phần tử HTML cần dùng
+    const video = document.getElementById("camera");
+    const canvas = document.getElementById("canvas");
+    const captureButton = document.getElementById("capture");
+    const capturedImageInput = document.getElementById("captured_image");
+
+    /* ===== BẬT CAMERA =====
+       - Yêu cầu quyền truy cập webcam
+       - Hiển thị video trực tiếp lên thẻ <video>
+    */
+    navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(error => {
+            console.error("Lỗi mở camera:", error);
+            alert("Không thể truy cập camera!");
+        });
+
+    /* ===== CHỤP ẢNH =====
+       - Vẽ khung hình hiện tại của video lên canvas
+       - Chuyển ảnh sang Base64
+       - Lưu vào input ẩn để gửi lên server
+    */
+    captureButton.addEventListener("click", () => {
+        const context = canvas.getContext("2d");
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        const imageData = canvas.toDataURL("image/png");
+        capturedImageInput.value = imageData;
+
+        alert("Ảnh đã được chụp thành công!");
+    });
+});
+</script>
+{% endblock %}

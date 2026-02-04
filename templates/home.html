@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Trang Chủ{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="fw-bold text-success mb-3">
+        🌍 HỆ THỐNG PHÂN LOẠI RÁC THẢI
+    </h1>
+    <p class="text-muted">
+        Góp phần bảo vệ môi trường bằng công nghệ thông minh
+    </p>
+</div>
+
+<div class="row g-4 justify-content-center">
+
+    <div class="col-md-4">
+        <a href="/" class="text-decoration-none">
+            <div class="card text-center p-4 shadow-lg h-100 border-0">
+                <i class="fas fa-recycle fa-3x text-success mb-3"></i>
+                <h5 class="fw-bold">Phân loại rác</h5>
+                <p class="text-muted">Chụp hoặc tải ảnh rác để phân loại</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="/leaderboard" class="text-decoration-none">
+            <div class="card text-center p-4 shadow-lg h-100 border-0">
+                <i class="fas fa-trophy fa-3x text-warning mb-3"></i>
+                <h5 class="fw-bold">Bảng xếp hạng</h5>
+                <p class="text-muted">Xem thành tích người dùng</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="/history" class="text-decoration-none">
+            <div class="card text-center p-4 shadow-lg h-100 border-0">
+                <i class="fas fa-clock fa-3x text-info mb-3"></i>
+                <h5 class="fw-bold">Lịch sử</h5>
+                <p class="text-muted">Theo dõi hoạt động đã sử dụng</p>
+            </div>
+        </a>
+    </div>
+
+    {% if is_admin %}
+    <div class="col-md-4">
+        <a href="/admin" class="text-decoration-none">
+            <div class="card text-center p-4 shadow-lg h-100 border-0">
+                <i class="fas fa-user-shield fa-3x text-danger mb-3"></i>
+                <h5 class="fw-bold">Quản trị</h5>
+                <p class="text-muted">Quản lý hệ thống</p>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
