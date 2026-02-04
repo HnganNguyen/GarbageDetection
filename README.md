@@ -51,12 +51,18 @@ GarbageDetection/
 
 ⚙️ Cài đặt & chạy project
 1️⃣ Clone repository
+
 git clone https://github.com/HnganNguyen/GarbageDetection.git
 cd GarbageDetection
+
 2️⃣ Cài thư viện
+
 pip install -r requirements.txt
+
 3️⃣ Chạy ứng dụng
+
 python app.py
+
 🌐 Truy cập: http://127.0.0.1:5000
 
 📸 Giao diện hệ thống
