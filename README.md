@@ -100,4 +100,8 @@ http://127.0.0.1:5000
 Nguyễn Thị Hồng Ngân
 
 GitHub: HnganNguyen
-
+ Tài liệu tham khảo : 
+ https://dl.acm.org/doi/fullHtml/10.1145/3574318.3574345
+ https://www.kaggle.com/datasets/mostafaabla/garbage-classification/code
+https://www.kaggle.com/code/naifislam/garbageclassificationwithselfsupervisedlearning97/notebook
+https://www.sciencedirect.com/science/article/pii/S0950705125000760
