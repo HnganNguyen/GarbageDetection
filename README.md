@@ -86,7 +86,7 @@ http://127.0.0.1:5000
 ````
 ## 🌐 Demo giao diện
 
-![Trang Phân Loại chính](static/anhdemo2.png)
+![Trang Phân Loại chính](static/anhdemo2.jpg)
 
 ## 🔮 Hướng phát triển
 
