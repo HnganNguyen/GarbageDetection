@@ -77,9 +77,9 @@ python app.py
 http://127.0.0.1:5000
 
 🌐 Demo giao diện
-(Bạn có thể chèn ảnh demo vào đây)
 
-![Demo](static/demo.png)
+![Trang Phân Loại chính](static/anhdemo2.png)
+
 🔮 Hướng phát triển
 🔍 Cải thiện độ chính xác mô hình
 
@@ -93,3 +93,4 @@ http://127.0.0.1:5000
 Nguyễn Thị Hồng Ngân
 
 GitHub: HnganNguyen
+
