@@ -1,6 +1,6 @@
-♻️ GarbageDetection
+#♻️ GarbageDetection♻️ 
 
-Hệ thống phân loại rác thải thông minh bằng AI & Computer Vision
+##Hệ thống phân loại rác thải thông minh bằng AI & Computer Vision
 
 
 📌 Giới thiệu
@@ -30,7 +30,7 @@ Làm nền tảng mở rộng cho các hệ thống môi trường thông minh
 
     🔐 Đăng nhập / Đăng ký tài khoản
 
-🧠 Công nghệ sử dụng
+##🧠 Công nghệ sử dụng
 Thành phần	Công nghệ
 Backend	Python, Flask
 AI	TensorFlow / Keras
@@ -38,7 +38,7 @@ Frontend	HTML, CSS, Bootstrap
 CSDL	SQLite
 Deploy	Docker, Procfile
 Khác	Git, GitHub
-🗂️ Cấu trúc thư mục
+##🗂️ Cấu trúc thư mục
 GarbageDetection/
 │
 ├── app.py                # File Flask chính
@@ -78,7 +78,7 @@ Lịch sử & bảng xếp hạng
 👩‍💻 Tác giả
 
 Nguyễn Thị Hồng Ngân - 223845
-🎓 Sinh viên Công nghệ Thông tin - Lớp DH22KPM01
+🎓 Sinh viên Kỹ thuật phần mềm - Lớp DH22KPM01
 📚 Đồ án / Dự án học tập
 💚 Quan tâm đến AI & môi trường
 
