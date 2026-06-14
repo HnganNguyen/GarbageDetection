@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+.admin-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.admin-title{
+font-weight:700;
+color:#1e293b;
+}
+
+.search-box{
+max-width:350px;
+}
+
+.stat-card{
+border:none;
+border-radius:15px;
+padding:20px;
+color:white;
+transition:0.3s;
+}
+
+.stat-card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.stat-icon{
+font-size:35px;
+opacity:0.4;
+position:absolute;
+right:20px;
+bottom:15px;
+}
+
+.table thead{
+background:#0d6efd;
+color:white;
+}
+
+.section-card{
+border:none;
+border-radius:15px;
+}
+.search-container{
+width:100%;
+max-width:700px;
+}
+
+.search-bar{
+border-radius:40px;
+overflow:hidden;
+background:white;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+padding:5px 10px;
+}
+
+.search-bar input{
+height:50px;
+font-size:16px;
+}
+
+.search-bar input:focus{
+box-shadow:none;
+}
+
+.search-bar .input-group-text{
+font-size:18px;
+}
+
+</style>
+
+<div class="container-fluid">
+
+<!-- HEADER -->
+
+    <div class="admin-header">
+
+    <div>
+    <h2 class="admin-title">⚙️ Bảng điều khiển Quản trị</h2>
+        <p class="text-muted">Quản lý người dùng và hoạt động hệ thống</p>
+    </div>
+
+<div class="search-container mb-4">
+
+<div class="input-group search-bar">
+
+<span class="input-group-text bg-white border-0">
+<i class="fas fa-search text-success"></i>
+</span>
+
+<input 
+type="text" 
+id="searchInput" 
+class="form-control border-0 shadow-none"
+placeholder="Tìm kiếm người dùng, email hoặc hoạt động...">
+
+</div>
+
+</div>
+</div>
+
+<!-- STATISTICS -->
+
+<div class="row mb-4">
+
+<div class="col-md-4">
+<div class="stat-card bg-primary position-relative">
+<h6>Tổng Người Dùng</h6>
+<h2>{{ users|length }}</h2>
+<i class="fa fa-users stat-icon"></i>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="stat-card bg-success position-relative">
+<h6>Tổng Khách Hàng</h6>
+<h2>{{ customer_data|length }}</h2>
+<i class="fa fa-user-check stat-icon"></i>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="stat-card bg-danger position-relative">
+<h6>Hoạt Động Gần Đây</h6>
+<h2>{{ activities|length }}</h2>
+<i class="fa fa-chart-line stat-icon"></i>
+</div>
+</div>
+
+</div>
+
+<!-- USER TABLE -->
+
+<div class="card section-card shadow-sm mb-4">
+
+<div class="card-header bg-primary text-white fw-bold">
+👤 Danh sách người dùng
+</div>
+
+<div class="card-body">
+
+<table class="table table-hover text-center" id="userTable">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Username</th>
+<th>Points</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for user in users %}
+<tr>
+<td>{{ user.id }}</td>
+<td>{{ user.username }}</td>
+<td>{{ user.points }}</td>
+</tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+</div>
+
+<!-- CUSTOMER INFO -->
+
+<div class="card section-card shadow-sm mb-4">
+
+<div class="card-header bg-warning fw-bold">
+📋 Thông tin khách hàng
+</div>
+
+<div class="card-body">
+
+<table class="table table-hover text-center">
+
+<thead>
+<tr>
+<th>Username</th>
+<th>Email</th>
+<th>SĐT</th>
+<th>Địa chỉ</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for customer in customer_data %}
+<tr>
+<td>{{ customer.user.username }}</td>
+<td>{{ customer.email }}</td>
+<td>{{ customer.phone }}</td>
+<td>{{ customer.address }}</td>
+</tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+</div>
+
+<!-- ACTIVITY -->
+
+<div class="card section-card shadow-sm">
+
+<div class="card-header bg-danger text-white fw-bold">
+📊 Lịch sử hoạt động
+</div>
+
+<div class="card-body">
+
+<table class="table table-hover text-center">
+
+<thead>
+<tr>
+<th>User</th>
+<th>Hoạt động</th>
+<th>Thời gian</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for activity in activities[:20] %}
+<tr>
+<td>{{ activity.user.username }}</td>
+<td>{{ activity.action }}</td>
+<td>{{ activity.timestamp }}</td>
+</tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+document.getElementById("searchInput").addEventListener("keyup", function() {
+
+let filter = this.value.toLowerCase()
+let rows = document.querySelectorAll("#userTable tbody tr")
+
+rows.forEach(row => {
+
+let username = row.children[1].textContent.toLowerCase()
+
+row.style.display = username.includes(filter) ? "" : "none"
+
+})
+
+})
+
+</script>
+
+{% endblock %}

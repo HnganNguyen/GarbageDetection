@@ -1,0 +1,17 @@
+#model.h5
+venv/
+__pycache__/
+*.pyc
+uploads/
+tfhub_models/
+tf_env/
+*.data*
+*.index
+variables/
+waste_classifier_3groups_v2.keras/tf_env/
+venv/
+tfhub_models/
+uploads/
+*.h5
+*.keras
+tf23_env/

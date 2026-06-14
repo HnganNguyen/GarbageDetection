@@ -1,0 +1,37 @@
+# --- Thư viện chính cho Web ---
+Flask==3.0.3
+Flask-SQLAlchemy==3.1.1
+SQLAlchemy==2.0.36
+gunicorn==23.0.0
+Jinja2==3.1.4
+Werkzeug==3.0.6
+itsdangerous==2.2.0
+MarkupSafe==2.1.5
+blinker==1.8.2
+click==8.1.7
+
+# --- Thư viện chính cho AI (TensorFlow 2.18) ---
+# Xóa các bản cũ/xung đột, để tensorflow tự kéo các bản con phù hợp
+tensorflow==2.18.0
+tensorflow-hub==0.16.1
+keras==3.6.0
+h5py==3.11.0
+numpy<2.0.0
+scipy==1.10.1
+pillow==10.4.0
+
+# --- Xử lý dữ liệu và Tiện ích ---
+opencv-python-headless
+openpyxl==3.1.2
+beautifulsoup4==4.12.3
+requests==2.32.3
+gdown==5.2.0
+packaging==24.2
+filelock==3.16.1
+
+# --- Thư viện hệ thống & Auth (Pip sẽ tự cân đối phiên bản) ---
+google-auth==2.36.0
+google-auth-oauthlib==1.0.0
+protobuf==4.25.5
+grpcio==1.68.0
+absl-py==2.1.0

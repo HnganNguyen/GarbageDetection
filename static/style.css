@@ -1,0 +1,164 @@
+/* ================= NỀN TỔNG THỂ ================= */
+body {
+    background: linear-gradient(135deg, #f1f8f4, #dcedc8);
+    font-family: 'Arial', sans-serif;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+    background-color: #ffffff !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo */
+.logo-dnc {
+    max-height: 50px;
+    margin-right: 10px;
+}
+
+/* ================= TIÊU ĐỀ ================= */
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+/* ================= NÚT ================= */
+.btn {
+    border-radius: 12px;
+    transition: all 0.3s ease-in-out;
+    text-transform: capitalize;
+}
+
+.btn i {
+    font-size: 1.5rem;
+}
+
+/* Hover chung */
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ================= NÚT PHÂN LOẠI (XANH LÁ) ================= */
+.btn-success,
+.btn-submit {
+    background-color: #2e7d32;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-success:hover,
+.btn-submit:hover {
+    background-color: #1b5e20;
+}
+
+/* ================= NÚT CHỤP / CẢNH BÁO (ĐỎ) ================= */
+.btn-danger,
+.btn-capture {
+    background-color: #d32f2f;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-danger:hover,
+.btn-capture:hover {
+    background-color: #b71c1c;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    background-color: #1b5e20;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer a.footer-link {
+    color: #ffcc80;
+    text-decoration: none;
+}
+
+.footer a.footer-link:hover {
+    text-decoration: underline;
+}
+
+/* ================= HUY CHƯƠNG ================= */
+.medal {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 0 auto;
+}
+
+/* Huy chương */
+.gold {
+    background-color: #fbc02d;
+    box-shadow: 0px 4px 8px rgba(251, 192, 45, 0.6);
+}
+
+.silver {
+    background-color: #9e9e9e;
+    box-shadow: 0px 4px 8px rgba(158, 158, 158, 0.6);
+}
+
+.bronze {
+    background-color: #8d6e63;
+    box-shadow: 0px 4px 8px rgba(141, 110, 99, 0.6);
+}
+
+/* ================= BẢNG ================= */
+.table {
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table thead th {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e8f5e9;
+    cursor: pointer;
+}
+
+/* Top bảng */
+tbody tr.top-1 {
+    font-weight: bold;
+    background-color: #e8f5e9;
+}
+
+tbody tr.top-2 {
+    font-weight: bold;
+    background-color: #f1f8e9;
+}
+
+tbody tr.top-3 {
+    font-weight: bold;
+    background-color: #fbe9e7;
+}
+
+/* ================= CARD ================= */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    font-size: 1.25rem;
+    font-weight: bold;
+    background-color: #2e7d32;
+    color: white;
+}

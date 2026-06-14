@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% block title %}Phân Loại Rác Công Nghệ AI{% endblock %}
+
+{% block content %}
+<style>
+    /* Custom Styles cho giao diện hiện đại */
+    :root {
+        --primary-color: #28a745;
+        --secondary-color: #f8f9fa;
+        --glass-bg: rgba(255, 255, 255, 0.95);
+    }
+
+    body {
+        background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        min-height: 100vh;
+    }
+
+    .main-wrapper {
+        max-width: 900px;
+        margin: 50px auto;
+    }
+
+    .glass-card {
+        background: var(--glass-bg);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        backdrop-filter: blur(10px);
+    }
+
+    .camera-box {
+        position: relative;
+        display: inline-block;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 5px solid #fff;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        background: #000;
+    }
+
+    /* Hiệu ứng tia quét AI */
+    .scanner-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: #28a745;
+        box-shadow: 0 0 15px #28a745;
+        animation: scan 3s infinite linear;
+        z-index: 10;
+    }
+
+    @keyframes scan {
+        0% { top: 0; }
+        50% { top: 100%; }
+        100% { top: 0; }
+    }
+
+    .btn-custom {
+        border-radius: 12px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-capture {
+        background: #dc3545;
+        color: white;
+        border: none;
+    }
+
+    .btn-capture:hover {
+        background: #c82333;
+        transform: scale(1.05);
+    }
+
+    .upload-zone {
+        border: 2px dashed #ccc;
+        border-radius: 15px;
+        padding: 20px;
+        transition: all 0.3s;
+        background: #fafafa;
+    }
+
+    .upload-zone:hover {
+        border-color: var(--primary-color);
+        background: #f1f8f1;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+        color: #444;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+</style>
+
+<div class="container main-wrapper">
+    <div class="glass-card">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold text-success mb-2">PHÂN LOẠI RÁC AI</h1>
+            <p class="text-muted fs-5">Hệ thống nhận diện và phân loại rác thông minh</p>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-md-6 text-center">
+                <h4 class="section-title"><i class="fas fa-camera"></i> Chụp ảnh trực tiếp</h4>
+                <div class="camera-box">
+                    <div class="scanner-line"></div>
+                    <video id="camera" autoplay playsinline style="width: 100%; max-width: 380px;"></video>
+                </div>
+                
+                <button id="capture" type="button" class="btn btn-custom btn-capture mt-4">
+                    📸 Chụp ảnh ngay
+                </button>
+                <canvas id="canvas" style="display: none;"></canvas>
+            </div>
+
+            <div class="col-md-6">
+                <h4 class="section-title"><i class="fas fa-file-upload"></i> Tải ảnh lên</h4>
+                
+                <form method="POST" action="/" enctype="multipart/form-data" class="h-100 d-flex flex-column">
+                    <input type="hidden" name="captured_image" id="captured_image">
+                    
+                    <div class="upload-zone text-center mb-4 flex-grow-1 d-flex flex-column justify-content-center">
+                        <i class="fas fa-cloud-upload-alt fa-3x text-success mb-3"></i>
+                        <label for="fileInput" class="form-label d-block fw-bold">Chọn ảnh từ thiết bị</label>
+                        <input type="file" name="file" id="fileInput" class="form-control form-control-sm">
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-custom w-100 shadow-sm py-3">
+                        🚀 BẮT ĐẦU PHÂN LOẠI
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="mt-5 p-3 bg-light rounded-3 border">
+            <small class="text-muted d-block text-center">
+                <i class="fas fa-info-circle me-1"></i> 
+                Mẹo: Hãy để rác ở nơi đủ ánh sáng và nằm giữa khung hình để AI nhận diện chính xác nhất.
+            </small>
+        </div>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const video = document.getElementById("camera");
+    const canvas = document.getElementById("canvas");
+    const captureButton = document.getElementById("capture");
+    const capturedImageInput = document.getElementById("captured_image");
+
+    // Mở Camera
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(error => {
+            console.error("Lỗi mở camera:", error);
+            alert("Không thể truy cập camera!");
+        });
+
+    // Xử lý chụp ảnh và NÉN ẢNH
+    captureButton.addEventListener("click", () => {
+        const context = canvas.getContext("2d");
+        
+        // CỐ ĐỊNH kích thước ảnh gửi đi để tránh lỗi 413
+        // Model của bạn dùng 224x224, nên 400px là quá đủ để nhận diện
+        const maxWidth = 400;
+        const scale = maxWidth / video.videoWidth;
+        canvas.width = maxWidth;
+        canvas.height = video.videoHeight * scale;
+
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // NÉN: Chuyển sang image/jpeg với chất lượng 0.7 (70%)
+        // Cách này giúp giảm dung lượng từ 10MB xuống còn khoảng vài trăm KB
+        const imageData = canvas.toDataURL("image/jpeg", 0.7);
+        capturedImageInput.value = imageData;
+
+        // Hiệu ứng phản hồi cho người dùng
+        captureButton.innerHTML = "✅ Đã chụp ảnh!";
+        captureButton.style.backgroundColor = "#28a745";
+        setTimeout(() => {
+            captureButton.innerHTML = "📸 Chụp ảnh ngay";
+            captureButton.style.backgroundColor = ""; 
+        }, 2000);
+        
+        console.log("Ảnh đã được nén và sẵn sàng gửi đi!");
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,99 @@
+{
+    "battery": {
+        "description": "Pin là rác thải nguy hại, chứa kim loại nặng như chì, thủy ngân và cadmium.",
+        "environmental_impact": "Nếu vứt ra môi trường, một viên pin có thể làm ô nhiễm 500 lít nước hoặc 1m3 đất trong 50 năm.",
+        "tips": "Hãy bảo quản pin cũ trong lọ thủy tinh cách điện và gửi đến điểm thu gom để xử lý chuyên dụng.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở A (59C Nguyễn Đình Chiểu, Quận 3)",
+            "Trạm thực hành xanh - Cơ sở B (279 Nguyễn Tri Phương, Quận 10)"
+        ]
+    },
+    "biological": {
+        "description": "Rác hữu cơ dễ phân hủy như thức ăn thừa, vỏ trái cây, bã trà và lá cây.",
+        "environmental_impact": "Chiếm 50-70% lượng rác thải sinh hoạt; nếu không phân loại sẽ gây mùi hôi và phát sinh khí methane gây biến đổi khí hậu.",
+        "tips": "Có thể tận dụng để ủ phân compost bón cho cây xanh tại nhà hoặc bỏ vào túi rác hữu cơ riêng biệt.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở H (1A Hoàng Diệu, Quận Phú Nhuận)"
+        ]
+    },
+    "brown-glass": {
+        "description": "Chai lọ thủy tinh màu nâu (thường dùng bảo quản bia, thuốc) giúp ngăn tia UV.",
+        "environmental_impact": "Thủy tinh có vòng đời tái chế vô tận. Tái chế thủy tinh giúp tiết kiệm 40% năng lượng so với sản xuất mới.",
+        "tips": "Vui lòng súc sạch bên trong, tháo nắp nhựa/kim loại và tránh làm vỡ để đảm bảo an toàn cho nhân viên thu gom.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở E (54 Nguyễn Văn Thủ, Quận 1)"
+        ]
+    },
+    "cardboard": {
+        "description": "Thùng carton, hộp giấy bìa cứng và bao bì giấy công nghiệp.",
+        "environmental_impact": "1 tấn giấy carton tái chế giúp cứu sống 17 cây xanh và tiết kiệm hàng ngàn lít nước sạch.",
+        "tips": "Nên gỡ bỏ băng dính, ép phẳng để tiết kiệm không gian lưu trữ và giữ cho giấy luôn khô ráo.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở D (196 Trần Quang Khải, Quận 1)"
+        ]
+    },
+    "clothes": {
+        "description": "Các loại quần áo, vải vụn hoặc phụ kiện thời trang không còn sử dụng.",
+        "environmental_impact": "Ngành thời trang nhanh tiêu thụ lượng nước khổng lồ và sợi tổng hợp có thể mất hàng trăm năm để phân hủy.",
+        "tips": "Nếu còn tốt, hãy quyên góp từ thiện. Nếu đã hỏng, vải có thể tái chế thành giẻ lau hoặc sợi cách nhiệt.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở V (232/6 Võ Thị Sáu, Quận 3)"
+        ]
+    },
+    "green-glass": {
+        "description": "Thủy tinh màu xanh lá (chai rượu vang, nước giải khát).",
+        "environmental_impact": "Tái chế 1 chai thủy tinh có thể tiết kiệm đủ điện năng để thắp sáng một bóng đèn trong 4 giờ.",
+        "tips": "Phân loại riêng theo màu sắc giúp quy trình tái chế tại nhà máy đạt hiệu quả cao nhất.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở N (17 Phạm Ngọc Thạch, Quận 3)"
+        ]
+    },
+    "metal": {
+        "description": "Vật liệu kim loại bao gồm lon nhôm, vỏ đồ hộp, sắt vụn và đồng.",
+        "environmental_impact": "Nhôm có thể tái chế vô hạn. 75% lượng nhôm từng sản xuất trên thế giới vẫn đang được sử dụng nhờ tái chế.",
+        "tips": "Hãy làm sạch thực phẩm bám bên trong và nén nhẹ để việc vận chuyển trở nên dễ dàng hơn.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở A (59C Nguyễn Đình Chiểu, Quận 3)"
+        ]
+    },
+    "paper": {
+        "description": "Giấy báo, tài liệu văn phòng, tạp chí và vở cũ, hộp sữa giấy.",
+        "environmental_impact": "Việc tái chế giấy giảm ô nhiễm không khí 73% so với sản xuất giấy từ bột gỗ nguyên chất.",
+        "tips": "Không cần xé vụn giấy vì sẽ làm ngắn sợi giấy, gây khó khăn cho việc tái chế. Tránh để giấy dính dầu mỡ.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở B (279 Nguyễn Tri Phương, Quận 10)"
+        ]
+    },
+    "plastic": {
+        "description": "Nhựa các loại (chai PET, túi nilon, hộp nhựa đựng thực phẩm).",
+        "environmental_impact": "Hành tinh đang 'ngộp thở' vì nhựa. Một chai nhựa mất 450 năm để phân rã thành vi nhựa gây hại.",
+        "tips": "Ưu tiên tái sử dụng nhiều lần. Khi thải bỏ, hãy bóp dẹt chai để tối ưu diện tích thùng rác.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở H (1A Hoàng Diệu, Quận Phú Nhuận)"
+        ]
+    },
+    "shoes": {
+        "description": "Giày thể thao, giày da và các loại dép đã qua sử dụng.",
+        "environmental_impact": "Đế giày thường làm từ cao su và nhựa tổng hợp, những chất liệu cực kỳ khó phân hủy tự nhiên.",
+        "tips": "Bạn có thể vệ sinh sạch sẽ để tặng lại cho người cần hoặc đưa đến trạm để tái chế phần đế cao su.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở E (54 Nguyễn Văn Thủ, Quận 1)"
+        ]
+    },
+    "trash": {
+        "description": "Rác thải còn lại không thể tái chế (đầu lọc thuốc lá, băng vệ sinh, gốm sứ vỡ).",
+        "environmental_impact": "Đây là loại rác phải chôn lấp hoặc đốt bỏ, gây áp lực trực tiếp lên quỹ đất của thành phố.",
+        "tips": "Hãy cố gắng giảm thiểu loại rác này bằng cách sử dụng các sản phẩm bền vững có thể tái sử dụng.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở D (196 Trần Quang Khải, Quận 1)"
+        ]
+    },
+    "white-glass": {
+        "description": "Thủy tinh trong suốt (hũ thực phẩm, ly thủy tinh, chai thủy tinh).",
+        "environmental_impact": "Thủy tinh trong suốt có giá trị tái chế cao nhất vì dễ dàng chuyển đổi thành bất kỳ màu sắc nào khác.",
+        "tips": "Tháo bỏ nhãn dán nếu có thể và rửa trôi lớp đường/thực phẩm bám dính bên trong.",
+        "recycle_centers": [
+            "Trạm thực hành xanh - Cơ sở V (232/6 Võ Thị Sáu, Quận 3)"
+        ]
+    }
+}

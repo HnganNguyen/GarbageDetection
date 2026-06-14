@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+{% block title %}Hệ thống Quản trị Rác thải{% endblock %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<style>
+    :root {
+        --primary-eco: #10b981;
+        --secondary-eco: #059669;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f1f5f9;
+        color: #1e293b;
+    }
+
+    /* --- SECTION: ACTION CARDS (Nút chức năng mới) --- */
+    .action-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 30px 20px;
+        text-decoration: none !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .action-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        border-color: var(--primary-eco);
+    }
+
+    .icon-wrapper {
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    /* Màu sắc riêng cho từng icon wrapper */
+    .bg-soft-success { background: #ecfdf5; color: #10b981; }
+    .bg-soft-warning { background: #fffbeb; color: #f59e0b; }
+    .bg-soft-info { background: #f0f9ff; color: #0ea5e9; }
+
+    .action-card:hover .icon-wrapper { transform: scale(1.1) rotate(10deg); }
+    .action-card:hover .bg-soft-success { background: #10b981; color: white; }
+    .action-card:hover .bg-soft-warning { background: #f59e0b; color: white; }
+    .action-card:hover .bg-soft-info { background: #0ea5e9; color: white; }
+
+    .action-title { font-size: 1.2rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
+    .action-desc { font-size: 0.85rem; color: #64748b; text-align: center; line-height: 1.4; }
+
+    .go-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s ease;
+        color: #cbd5e1;
+    }
+    .action-card:hover .go-icon { opacity: 1; transform: translateX(0); }
+
+    /* --- SECTION: STAT CARDS (KPIs) --- */
+    .stat-card {
+        border: none;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        position: relative;
+    }
+    .stat-icon-bg {
+        position: absolute;
+        right: -10px;
+        bottom: -10px;
+        font-size: 5rem;
+        opacity: 0.15;
+        transform: rotate(-15deg);
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #334155;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .user-avatar {
+        width: 40px; height: 40px;
+        background: #e2e8f0;
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--primary-eco);
+    }
+
+    .chart-container { position: relative; height: 350px; width: 100%; }
+</style>
+
+<div class="container-fluid py-4">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold text-muted mb-1">Welcome back, {{ username }}</h4>
+            <h2 class="fw-bold">📊 Dashboard Quản trị</h2>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-white shadow-sm text-dark p-2 px-3 border">
+                <i class="fas fa-calendar-alt text-success me-2"></i> {{ now }}
+            </span>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-4 mb-3">
+            <a href="/" class="action-card shadow-sm">
+                <i class="fas fa-arrow-right go-icon"></i>
+                <div class="icon-wrapper bg-soft-success">
+                    <i class="fas fa-camera fa-2x"></i>
+                </div>
+                <div class="action-title">Phân loại rác</div>
+                <div class="action-desc">Sử dụng AI để nhận diện và phân loại rác thải từ hình ảnh</div>
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <a href="/leaderboard" class="action-card shadow-sm">
+                <i class="fas fa-arrow-right go-icon"></i>
+                <div class="icon-wrapper bg-soft-warning">
+                    <i class="fas fa-trophy fa-2x"></i>
+                </div>
+                <div class="action-title">Bảng xếp hạng</div>
+                <div class="action-desc">Xem danh sách những người dùng đóng góp tích cực nhất</div>
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <a href="/history" class="action-card shadow-sm text-white">
+                <i class="fas fa-arrow-right go-icon"></i>
+                <div class="icon-wrapper bg-soft-info">
+                    <i class="fas fa-history fa-2x"></i>
+                </div>
+                <div class="action-title">Lịch sử hệ thống</div>
+                <div class="action-desc">Xem lại toàn bộ nhật ký phân loại rác thải đã thực hiện</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        {% set kpis = [
+            {'label': 'Tổng Người Dùng', 'value': total_users, 'color1': '#3b82f6', 'color2': '#2563eb', 'icon': 'fa-users'},
+            {'label': 'Tổng Phân Loại', 'value': total_classify, 'color1': '#10b981', 'color2': '#059669', 'icon': 'fa-recycle'},
+            {'label': 'Rác Phổ Biến', 'value': top_waste, 'color1': '#f59e0b', 'color2': '#d97706', 'icon': 'fa-dumpster'},
+            {'label': 'Người Dùng Top 1', 'value': top_user, 'color1': '#8b5cf6', 'color2': '#7c3aed', 'icon': 'fa-crown'}
+        ] %}
+        
+        {% for kpi in kpis %}
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm text-white p-4" 
+                 style="background: linear-gradient(135deg, {{ kpi.color1 }}, {{ kpi.color2 }})">
+                <i class="fas {{ kpi.icon }} stat-icon-bg"></i>
+                <div class="position-relative">
+                    <p class="text-uppercase small fw-bold opacity-75 mb-1">{{ kpi.label }}</p>
+                    <h2 class="fw-bold mb-0">{{ kpi.value }}</h2>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
+                <div class="card-header bg-white py-3 border-0">
+                    <div class="section-title">
+                        <i class="fas fa-bolt text-warning"></i> Hoạt động mới nhất
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% for act in recent_activity %}
+                        <div class="list-group-item border-0 border-bottom d-flex align-items-center p-3">
+                            <div class="user-avatar me-3">
+                                <i class="fas fa-user-circle fa-lg"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="mb-0 fw-bold">{{ act.username if is_admin else 'User ' ~ loop.index }}</h6>
+                                    <small class="text-muted small">{{ act.timestamp }}</small>
+                                </div>
+                                <p class="mb-0 text-muted small mt-1">
+                                    <span class="badge bg-success-subtle text-success fw-normal">Thành công</span> {{ act[1] }}
+                                </p>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="p-5 text-center">
+                            <p class="text-muted">Chưa có hoạt động nào</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center">
+                    <div class="section-title"><i class="fas fa-chart-bar text-primary"></i> Phân tích loại rác</div>
+                    {% if is_admin %}
+                    <a href="/export_excel" class="btn btn-success btn-sm rounded-pill shadow-sm">
+                        <i class="fas fa-file-excel"></i> Xuất Excel
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="wasteChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('wasteChart').getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(16, 185, 129, 0.8)');
+        gradient.addColorStop(1, 'rgba(16, 185, 129, 0.1)');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ waste_labels|safe }},
+                datasets: [{
+                    label: 'Số lần phân loại',
+                    data: {{ waste_counts|safe }},
+                    backgroundColor: gradient,
+                    borderColor: '#10b981',
+                    borderWidth: 2,
+                    borderRadius: 12,
+                    barThickness: 35
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { stepSize: 1 } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
