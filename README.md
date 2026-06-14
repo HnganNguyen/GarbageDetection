@@ -10,12 +10,11 @@
   <img src="https://img.shields.io/badge/AI-Computer%20Vision-orange">
   <img src="https://img.shields.io/badge/Deep%20Learning-TensorFlow-red">
 </p>
-Link video demo & model.h5 đã train (vì do model vượt quá dung lượng trên github nên em đã để vào gg drive): https://drive.google.com/drive/folders/1v8bW2IKk2Fg0j4nyo0LsehD8XTb98tVR?usp=sharing
----
+
 
 ## 📖 Giới thiệu dự án
 
-**GarbageDetection** là hệ thống phân loại rác thải sinh hoạt thông minh ứng dụng trí tuệ nhân tạo, được phát triển trong khuôn khổ Đồ án Chuyên ngành 2 tại Trường Đại học Nam Cần Thơ.
+**GarbageDetection** là hệ thống phân loại rác thải sinh hoạt thông minh ứng dụng trí tuệ nhân tạo, được phát triển trong khuôn khổ Luận văn tốt nghiệp.
 
 Hệ thống cho phép người dùng tải ảnh hoặc chụp ảnh rác thải trực tiếp, sau đó mô hình AI sẽ tự động nhận diện và phân loại vào đúng nhóm rác tương ứng trong vòng vài giây, đồng thời cung cấp hướng dẫn xử lý và cơ chế tích điểm thưởng nhằm khuyến khích cộng đồng tham gia bảo vệ môi trường.
 
@@ -23,39 +22,62 @@ Hệ thống cho phép người dùng tải ảnh hoặc chụp ảnh rác thả
 
 ## 🧠 Mô hình AI
 
-Mô hình được xây dựng theo kiến trúc lai hai nhánh (*Two-Stream Hybrid Architecture*):
+Mô hình được xây dựng từ đầu (train-from-scratch) với kiến trúc CNN lightweight chuyên biệt cho bài toán phân loại rác thải sinh hoạt tại Việt Nam.
 
-- **Nhánh Swin Transformer** — trích xuất đặc trưng ngữ nghĩa toàn cục của hình ảnh, nhận biết hình dạng tổng thể và mối quan hệ không gian giữa các vùng trong ảnh
-- **Nhánh Autoencoder + SE-Block** — trích xuất đặc trưng cục bộ chi tiết về kết cấu bề mặt, độ bóng và các mẫu vi cấu trúc đặc trưng của từng loại vật liệu
+### Thành phần chính
 
-Hai luồng đặc trưng được ghép nối (*concatenate*) và đưa qua lớp Softmax để phân loại. Nhờ chiến lược tiền huấn luyện và đóng băng tham số, mô hình chỉ có **dưới 1,4 triệu tham số** có thể huấn luyện — nhỏ gọn hơn đáng kể so với các mô hình thông thường, giúp triển khai nhanh với chi phí tính toán thấp.
+- Residual Separable Convolution (ResSep)
+  - Giảm số lượng tham số thông qua Depthwise Separable Convolution
+  - Kết hợp Residual Connection giúp huấn luyện ổn định
+
+- SimAM Attention
+  - Cơ chế attention không tham số
+  - Tự động làm nổi bật vùng thông tin quan trọng
+
+- Large Kernel Attention (LKA)
+  - Mở rộng receptive field lên khoảng 19×19
+  - Tăng khả năng nhận biết hình dạng tổng thể của vật thể
+
+- Lightweight Classification Head
+  - Global Average Pooling
+  - Dense Layer
+  - Softmax 3 lớp
 
 ---
 
 ## 📊 Hiệu năng mô hình
 
-Được huấn luyện và đánh giá trên tập dữ liệu **Garbage Classification (Kaggle)** gồm 15.150 hình ảnh thuộc 12 lớp phân loại:
+Được huấn luyện trên bộ dữ liệu Garbage Classification (15.515 ảnh) sau khi ánh xạ về 3 nhóm rác theo Luật Bảo vệ Môi trường Việt Nam.
 
-| Tập dữ liệu | Accuracy | Precision | Recall | F1-Score |
-|:-----------:|:--------:|:---------:|:------:|:--------:|
-| Train       | 99.02%   | 98.86%    | 99.16% | 99.00%   |
-| Validation  | 97.32%   | 96.19%    | 98.08% | 97.12%   |
-| Test        | ~95.5%   | ~95.2%    | ~95.0% | ~95.1%   |
+| Chỉ số | Giá trị |
+|---------|---------|
+| Accuracy | 95.24% |
+| Precision (Macro) | 0.88 |
+| Recall (Macro) | 0.92 |
+| F1-score (Macro) | 0.90 |
+| Parameters | 1,827,907 |
+| Model Size (TFLite FP16) | 3.48 MB |
+| Throughput | 50.4 FPS |
+| GFLOPs | 1.50 |
 
-> ✅ **AUC = 1.00** trên toàn bộ 12 lớp phân loại
+### So sánh với các mô hình nền
+
+| Model | Accuracy | Parameters |
+|---------|---------|---------|
+| VGG16 | 94.41% | 138M |
+| EfficientNetB0 | 94.67% | 5.3M |
+| MobileNetV2 | 92.86% | 3.4M |
+| VN-LiteWaste | 95.24% | 1.83M |
 
 ---
 
-## 🗂️ 12 lớp rác thải được phân loại
+## ♻️ Ba nhóm rác được phân loại
 
-| Nhóm | Lớp |
-|------|-----|
-| 📄 Vật liệu sợi | Paper, Cardboard |
-| 🌿 Rác hữu cơ | Biological |
-| 🔩 Vật liệu cứng tái chế | Metal, Plastic |
-| 🍶 Thủy tinh | Green-glass, Brown-glass, White-glass |
-| 👕 Hàng dệt may | Clothes, Shoes |
-| 🔋 Rác đặc biệt | Battery, Trash |
+| Nhóm | Thành phần |
+|--------|--------|
+| ♻️ Recyclable | Paper, Cardboard, Plastic, Metal, Clothes, Shoes, Brown Glass, Green Glass, White Glass |
+| 🌱 Organic | Biological Waste |
+| 🗑️ Other | Battery, Trash |
 
 ---
 
@@ -77,7 +99,7 @@ Hai luồng đặc trưng được ghép nối (*concatenate*) và đưa qua l�
 | Ngôn ngữ lập trình | Python 3.8+ |
 | Web Framework | Flask |
 | Mô hình AI | TensorFlow / Keras |
-| Kiến trúc mô hình | Swin Transformer + Autoencoder & SE-Block |
+| Kiến trúc mô hình | SResSep + SimAM + LKA |
 | Cơ sở dữ liệu | SQLite + SQLAlchemy |
 | Giao diện | HTML5, CSS3, JavaScript |
 | Huấn luyện mô hình | Kaggle GPU |
@@ -107,12 +129,12 @@ GarbageDetection/
 │   ├── upload.html             # Tải ảnh lên
 │   └── waste_detail.html       # Chi tiết loại rác
 │
-├── tfhub_models/               # Mô hình Swin Transformer từ TF Hub
+├
 ├── uploads/                    # Ảnh người dùng tải lên
-├── venv/                       # Môi trường ảo Python
+├── tf_venv/                    # Môi trường ảo Python
 │
 ├── app.py                      # Flask backend chính
-├── model.h5                    # Mô hình AI đã huấn luyện
+├── waste_classifier.3group.keras # Mô hình AI đã huấn luyện
 ├── waste_info.json             # Dữ liệu thông tin các loại rác
 ├── requirements.txt            # Thư viện Python
 ├── runtime.txt                 # Phiên bản Python
@@ -136,7 +158,7 @@ cd GarbageDetection
 **2️⃣ Tạo môi trường ảo & cài thư viện**
 ```bash
 python -m venv venv
-source venv/bin/activate      # Linux / Mac
+source .\tf_env\Scripts\activate     # Linux / Mac
 venv\Scripts\activate         # Windows
 pip install -r requirements.txt
 ```
