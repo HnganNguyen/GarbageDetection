@@ -21,6 +21,32 @@ app_port: 7860
 </p>
 
 
+---
+
+## 🌐 Đường link truy cập hệ thống
+
+Hệ thống hiện tại đang được triển khai thử nghiệm trực tiếp trên máy chủ VPS CloudFly. Bạn có thể truy cập, chụp ảnh và trải nghiệm ngay các tính năng phân loại thông qua địa chỉ dưới đây:
+
+
+👉 **Địa chỉ Web công khai:** [http://103.166.184.100](http://103.166.184.100)
+
+*Mẹo: Khi truy cập bằng điện thoại qua HTTP, ứng dụng sẽ tự động kích hoạt chế độ Fallback Mode giúp bạn mở trực tiếp Camera của thiết bị để chụp ảnh rác một cách dễ dàng.*
+
+### 🔐 Tài khoản trải nghiệm thử hệ thống:
+
+Để thuận tiện cho việc đánh giá và kiểm thử toàn bộ các chức năng (bao gồm cả trang quản trị dành cho Admin), bạn có thể sử dụng các tài khoản mặc định sau:
+
+1. **Tài khoản Quản trị viên (Admin):**
+   - **Username:** `admin`
+   - **Password:** `12345`
+   - *Quyền hạn: Xem Dashboard tổng quan, quản lý danh sách người dùng, xem toàn bộ nhật ký phân loại hệ thống, xuất báo cáo thống kê Excel.*
+
+2. **Tài khoản Người dùng (User):**
+   - **Username:** `Hngan`
+   - **Password:** `123123`
+   - *Quyền hạn: Chụp ảnh phân loại rác, tích lũy điểm thưởng, xem lịch sử phân loại cá nhân, theo dõi bảng xếp hạng.*
+
+---
 ## 📖 Giới thiệu dự án
 
 **GarbageDetection** là hệ thống phân loại rác thải sinh hoạt thông minh ứng dụng trí tuệ nhân tạo, được phát triển trong khuôn khổ Luận văn tốt nghiệp.

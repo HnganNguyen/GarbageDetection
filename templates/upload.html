@@ -3,7 +3,6 @@
 
 {% block content %}
 <style>
-    /* Custom Styles cho giao diện hiện đại */
     :root {
         --primary-color: #28a745;
         --secondary-color: #f8f9fa;
@@ -39,7 +38,6 @@
         background: #000;
     }
 
-    /* Hiệu ứng tia quét AI */
     .scanner-line {
         position: absolute;
         top: 0;
@@ -98,6 +96,72 @@
         justify-content: center;
         gap: 10px;
     }
+
+    /* === THÊM: Preview & Fallback === */
+    .preview-box {
+        display: none;
+        margin-top: 15px;
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 3px solid var(--primary-color);
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+
+    .preview-box img {
+        width: 100%;
+        max-height: 280px;
+        object-fit: contain;
+        display: block;
+        background: #f0f0f0;
+    }
+
+    .preview-box .badge-captured {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        background: var(--primary-color);
+        color: #fff;
+        padding: 3px 10px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .preview-box .btn-retake {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(0,0,0,0.5);
+        color: #fff;
+        font-size: 0.85rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .preview-box .btn-retake:hover {
+        background: rgba(220, 53, 69, 0.9);
+    }
+
+    .fallback-notice {
+        display: none;
+        text-align: center;
+        padding: 30px 15px;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .fallback-notice .fallback-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        display: block;
+    }
 </style>
 
 <div class="container main-wrapper">
@@ -108,23 +172,44 @@
         </div>
 
         <div class="row g-5">
+            <!-- === CỘT TRÁI: CAMERA === -->
             <div class="col-md-6 text-center">
                 <h4 class="section-title"><i class="fas fa-camera"></i> Chụp ảnh trực tiếp</h4>
-                <div class="camera-box">
+
+                <div class="camera-box" id="cameraBox">
                     <div class="scanner-line"></div>
-                    <video id="camera" autoplay playsinline style="width: 100%; max-width: 380px;"></video>
+                    <video id="camera" autoplay playsinline muted style="width: 100%; max-width: 380px;"></video>
                 </div>
+
+                <!-- Fallback khi không mở được camera (HTTP / mobile) -->
+                <div class="fallback-notice" id="fallbackNotice">
+                    <span class="fallback-icon">📱</span>
+                    <strong>Camera sẵn sàng</strong><br>
+                    Bấm nút bên dưới để mở camera thiết bị
+                </div>
+
+                <!-- File input ẩn cho fallback capture -->
+                <input type="file" id="fileCapture" accept="image/*" capture="environment" style="display:none;">
                 
                 <button id="capture" type="button" class="btn btn-custom btn-capture mt-4">
                     📸 Chụp ảnh ngay
                 </button>
+
                 <canvas id="canvas" style="display: none;"></canvas>
+
+                <!-- Preview ảnh vừa chụp -->
+                <div class="preview-box" id="previewBox">
+                    <span class="badge-captured">✓ Ảnh vừa chụp</span>
+                    <button type="button" class="btn-retake" id="retakeBtn" title="Xóa & chụp lại">✕</button>
+                    <img id="previewImage" src="" alt="Preview">
+                </div>
             </div>
 
+            <!-- === CỘT PHẢI: UPLOAD === -->
             <div class="col-md-6">
                 <h4 class="section-title"><i class="fas fa-file-upload"></i> Tải ảnh lên</h4>
                 
-                <form method="POST" action="/" enctype="multipart/form-data" class="h-100 d-flex flex-column">
+                <form method="POST" action="/" enctype="multipart/form-data" id="mainForm" class="h-100 d-flex flex-column">
                     <input type="hidden" name="captured_image" id="captured_image">
                     
                     <div class="upload-zone text-center mb-4 flex-grow-1 d-flex flex-column justify-content-center">
@@ -133,7 +218,7 @@
                         <input type="file" name="file" id="fileInput" class="form-control form-control-sm">
                     </div>
 
-                    <button type="submit" class="btn btn-success btn-custom w-100 shadow-sm py-3">
+                    <button type="submit" class="btn btn-success btn-custom w-100 shadow-sm py-3" id="submitBtn">
                         🚀 BẮT ĐẦU PHÂN LOẠI
                     </button>
                 </form>
@@ -149,52 +234,168 @@
     </div>
 </div>
 
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    const video = document.getElementById("camera");
-    const canvas = document.getElementById("canvas");
-    const captureButton = document.getElementById("capture");
-    const capturedImageInput = document.getElementById("captured_image");
+    const video         = document.getElementById("camera");
+    const canvas        = document.getElementById("canvas");
+    const cameraBox     = document.getElementById("cameraBox");
+    const captureBtn    = document.getElementById("capture");
+    const retakeBtn     = document.getElementById("retakeBtn");
+    const hiddenInput   = document.getElementById("captured_image");
+    const fileCapture   = document.getElementById("fileCapture");
+    const fallbackNotice= document.getElementById("fallbackNotice");
+    const previewBox    = document.getElementById("previewBox");
+    const previewImage  = document.getElementById("previewImage");
+    const fileInput     = document.getElementById("fileInput");
+    const form          = document.getElementById("mainForm");
 
-    // Mở Camera
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-        .then(stream => {
-            video.srcObject = stream;
-        })
-        .catch(error => {
-            console.error("Lỗi mở camera:", error);
-            alert("Không thể truy cập camera!");
-        });
+    let cameraMode = "pending"; // "pending" | "stream" | "fallback"
 
-    // Xử lý chụp ảnh và NÉN ẢNH
-    captureButton.addEventListener("click", () => {
-        const context = canvas.getContext("2d");
-        
-        // CỐ ĐỊNH kích thước ảnh gửi đi để tránh lỗi 413
-        // Model của bạn dùng 224x224, nên 400px là quá đủ để nhận diện
-        const maxWidth = 400;
-        const scale = maxWidth / video.videoWidth;
-        canvas.width = maxWidth;
-        canvas.height = video.videoHeight * scale;
+    // ============================================================
+    // 1. XÓA SẠCH dữ liệu ảnh cũ — gọi TRƯỚC mỗi lần chụp mới
+    // ============================================================
+    function clearCapture() {
+        // Xóa hidden input (dữ liệu gửi server)
+        hiddenInput.value = "";
 
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        // Xóa preview
+        previewImage.src = "";
+        previewBox.style.display = "none";
 
-        // NÉN: Chuyển sang image/jpeg với chất lượng 0.7 (70%)
-        // Cách này giúp giảm dung lượng từ 10MB xuống còn khoảng vài trăm KB
-        const imageData = canvas.toDataURL("image/jpeg", 0.7);
-        capturedImageInput.value = imageData;
+        // Reset file input fallback (để change event luôn trigger)
+        fileCapture.value = "";
 
-        // Hiệu ứng phản hồi cho người dùng
-        captureButton.innerHTML = "✅ Đã chụp ảnh!";
-        captureButton.style.backgroundColor = "#28a745";
-        setTimeout(() => {
-            captureButton.innerHTML = "📸 Chụp ảnh ngay";
-            captureButton.style.backgroundColor = ""; 
-        }, 2000);
-        
-        console.log("Ảnh đã được nén và sẵn sàng gửi đi!");
+        // XÓA SẠCH CANVAS — tránh pixel cũ còn sót
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.width = 0;
+        canvas.height = 0;
+
+        // Reset nút chụp
+        captureBtn.innerHTML = "📸 Chụp ảnh ngay";
+        captureBtn.style.backgroundColor = "";
+    }
+
+    // ============================================================
+    // 2. NÉN & LƯU ảnh mới → hidden input + preview
+    // ============================================================
+    function processAndSave(source) {
+        const MAX_DIM = 800;
+        let sw, sh;
+
+        if (source instanceof HTMLVideoElement) {
+            sw = source.videoWidth;
+            sh = source.videoHeight;
+        } else {
+            sw = source.naturalWidth || source.width;
+            sh = source.naturalHeight || source.height;
+        }
+        if (!sw || !sh) return;
+
+        // Co theo chiều lớn hơn (ảnh dọc hay ngang đều ổn)
+        const scale = Math.min(1, MAX_DIM / Math.max(sw, sh));
+        canvas.width  = Math.round(sw * scale);
+        canvas.height = Math.round(sh * scale);
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
+
+        // Nén JPEG 70%
+        const dataURL = canvas.toDataURL("image/jpeg", 0.7);
+
+        // ★ GHI ĐÈ HOÀN TOÀN dữ liệu cũ trong hidden input
+        hiddenInput.value = dataURL;
+
+        // Hiển thị preview
+        previewImage.src = dataURL;
+        previewBox.style.display = "block";
+
+        // Phản hồi UI
+        captureBtn.innerHTML = "✅ Đã chụp! Bấm lại để chụp mới";
+        captureBtn.style.backgroundColor = "#28a745";
+    }
+
+    // ============================================================
+    // 3. KHỞI TẠO CAMERA — tự fallback nếu HTTP/mobile
+    // ============================================================
+    if (navigator.mediaDevices?.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+            .then(stream => {
+                video.srcObject = stream;
+                cameraMode = "stream";
+            })
+            .catch(() => activateFallback());
+    } else {
+        activateFallback();
+    }
+
+    function activateFallback() {
+        cameraMode = "fallback";
+        cameraBox.style.display = "none";
+        fallbackNotice.style.display = "block";
+    }
+
+    // ============================================================
+    // 4. NÚT "Chụp ảnh ngay" — MỘT listener DUY NHẤT
+    //    (fix bug: code cũ gắn 2 listener chồng nhau)
+    // ============================================================
+    captureBtn.addEventListener("click", () => {
+        // ★ LUÔN xóa sạch dữ liệu cũ TRƯỚC
+        clearCapture();
+
+        if (cameraMode === "stream") {
+            // Camera trực tiếp (HTTPS/localhost)
+            if (video.readyState < 2) return;
+            processAndSave(video);
+        } else {
+            // Fallback: mở camera thiết bị (HTTP/mobile)
+            fileCapture.click();
+        }
+    });
+
+    // ============================================================
+    // 5. FALLBACK: xử lý ảnh từ camera thiết bị
+    // ============================================================
+    fileCapture.addEventListener("change", e => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = evt => {
+            const img = new Image();
+            img.onload = () => {
+                hiddenInput.value = ""; // Xóa lần nữa cho chắc
+                processAndSave(img);
+            };
+            img.src = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // ============================================================
+    // 6. NÚT "Xóa & chụp lại" trên preview
+    // ============================================================
+    retakeBtn.addEventListener("click", () => clearCapture());
+
+    // ============================================================
+    // 7. FORM SUBMIT — validate + tránh gửi trùng
+    // ============================================================
+    form.addEventListener("submit", e => {
+        const hasCaptured = hiddenInput.value && hiddenInput.value.length > 100;
+        const hasFile     = fileInput.files.length > 0;
+
+        if (!hasCaptured && !hasFile) {
+            e.preventDefault();
+            alert("Vui lòng chụp ảnh hoặc chọn file trước khi phân loại!");
+            return;
+        }
+
+        // Nếu có cả 2, ưu tiên ảnh chụp
+        if (hasCaptured && hasFile) {
+            fileInput.value = "";
+        }
     });
 });
 </script>

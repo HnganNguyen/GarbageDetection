@@ -4,7 +4,7 @@ FROM python:3.11-slim
 # 2. Thiết lập thư mục làm việc
 WORKDIR /app
 
-# 3. Cài đặt các thư viện hệ thống (Đã thêm các thư viện hỗ trợ OpenCV và Git LFS)
+# 3. Cài đặt các thư viện hệ thống (Đã thêm các thư viện hỗ trợ OpenCV)
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libpng-dev \
     git \
-    git-lfs \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # 4. Copy requirements trước để tận dụng Docker Cache
@@ -25,13 +24,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # 6. Copy toàn bộ project vào /app
 COPY . /app
-WORKDIR /app
-COPY waste_classifier_3groups_v2.keras /app/waste_classifier_3groups_v2.keras
-# 7. Kéo các file Git LFS cần thiết (model .keras)
-#RUN git lfs install --system && git lfs pull --include="*.keras" --exclude="" && rm -rf .git
 
-# 8. Mở cổng 80
+# 7. Mở cổng 80
 EXPOSE 80
 
-# 9. Chạy Flask app
+# 8. Chạy Flask app
 CMD ["python", "app.py"]

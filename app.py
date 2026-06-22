@@ -16,16 +16,13 @@ from werkzeug.utils import secure_filename
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
-# --- Bắt đầu phần code của bạn ở đây ---
-# =========================================================
+
 # CẤU HÌNH MODEL 3 NHÓM RÁC (Luật BVMT 2020 - Điều 75)
-# =========================================================
 IMG_SIZE   = 260
 MODEL_PATH = "waste_classifier_3groups_v2.keras"
 # Nếu muốn dùng checkpoint tốt nhất, đổi sang:
 # MODEL_PATH = "best_CustomCNN_3groups_v2.keras"
 
-# Thứ tự index PHẢI khớp class_map.json / Keras sort alphabet
 # 0 -> khac, 1 -> tai_che, 2 -> thuc_pham
 IDX_TO_GROUP = {
     0: "khac",
@@ -95,9 +92,8 @@ GROUP_INFO = {
     },
 }
 
-# =========================================================
-# CUSTOM LAYER — BẮT BUỘC để load model .keras
-# =========================================================
+
+#  load model .keras
 @tf.keras.utils.register_keras_serializable(package="Custom")
 class SimAMBlock(tf.keras.layers.Layer):
     """Simple, parameter-free 3D attention."""
@@ -200,7 +196,7 @@ def classify_image(image_path):
 
         image = Image.open(image_path).convert("RGB")
         image = image.resize((IMG_SIZE, IMG_SIZE))
-        arr   = np.array(image, dtype=np.float32) / 255.0
+        arr   = np.array(image, dtype=np.float32) / 255.0 
         arr   = np.expand_dims(arr, axis=0)
 
         preds      = model.predict(arr, verbose=0)[0]
@@ -735,11 +731,14 @@ if __name__ == "__main__":
     if model is None:
         print(f"❌ Không load được model! Kiểm tra file {MODEL_PATH}")
         exit(1)
+
     print("✅ Model ready!")
 
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host='0.0.0.0', port=port, debug=True)
-
+    app.run(
+        host="0.0.0.0",
+        port=8080,
+        debug=False
+    )
 
 
 
