@@ -17,10 +17,10 @@
 
 ## 🌐 Đường link truy cập hệ thống
 
-Hệ thống hiện tại đang được triển khai thử nghiệm trực tiếp trên máy chủ VPS CloudFly. Bạn có thể truy cập, chụp ảnh và trải nghiệm ngay các tính năng phân loại thông qua địa chỉ dưới đây:
+Hệ thống hiện tại đang được triển khai thử nghiệm trực tiếp trên máy chủ VPS INET. Bạn có thể truy cập, chụp ảnh và trải nghiệm ngay các tính năng phân loại thông qua địa chỉ dưới đây:
 
 
-👉 **Địa chỉ Web công khai:** [http://103.166.184.100](http://103.166.184.100)
+👉 **Địa chỉ Web công khai:** [https://phanloairac.id.vn](https://phanloairac.id.vn)
 
 *Mẹo: Khi truy cập bằng điện thoại qua HTTP, ứng dụng sẽ tự động kích hoạt chế độ Fallback Mode giúp bạn mở trực tiếp Camera của thiết bị để chụp ảnh rác một cách dễ dàng.*
 
@@ -185,8 +185,7 @@ cd GarbageDetection
 **2️⃣ Tạo môi trường ảo & cài thư viện**
 ```bash
 python -m venv venv
-source .\tf_env\Scripts\activate     # Linux / Mac
-venv\Scripts\activate         # Windows
+source .\tf_env\Scripts\activate     
 pip install -r requirements.txt
 ```
 
